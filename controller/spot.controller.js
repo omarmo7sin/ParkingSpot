@@ -44,7 +44,7 @@ export const getSpotById = async (req, res) => {
 export const createSpot = async (req, res) => {
     const { name, longitude, latitude, isAvailable } = req.body;
 
-    // Ensure longitude and latitude are provided
+    
     if (!longitude || !latitude) {
         return res.status(400).json({ message: "Longitude and latitude are required" });
     }
@@ -53,9 +53,9 @@ export const createSpot = async (req, res) => {
         name,
         location: {
             type: "Point",
-            coordinates: [longitude, latitude] // GeoJSON format: [longitude, latitude]
+            coordinates: [longitude, latitude] 
         },
-        isAvailable: isAvailable || true // Default to true if not provided
+        isAvailable: isAvailable || true 
     });
 
     try {
@@ -79,14 +79,14 @@ export const updateSpot = async (req, res) => {
         if (longitude && latitude) {
             updateData.location = {
                 type: "Point",
-                coordinates: [longitude, latitude] // GeoJSON format: [longitude, latitude]
+                coordinates: [longitude, latitude] 
             };
         }
 
         const updatedSpot = await ParkingSpot.findByIdAndUpdate(
             req.params.id,
             updateData,
-            { new: true, runValidators: true } // Return the updated document and validate the update
+            { new: true, runValidators: true } 
         );
 
         if (!updatedSpot) {
